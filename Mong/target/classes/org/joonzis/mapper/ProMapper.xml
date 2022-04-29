@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.joonzis.mapper.ProMapper"> 
+	<select id="productlist" resultType="org.joonzis.domain.ProductVO">
+		select * from pro_board 
+		order by p_num desc
+	</select>
+	
+	<select id="catelist1" resultType="org.joonzis.domain.ProductVO">
+		<![CDATA[select * from pro_board
+		where p_cate =1
+		]]>
+	</select>
+	<select id="catelist2" resultType="org.joonzis.domain.ProductVO">
+		<![CDATA[select * from pro_board
+		where p_cate =2
+		]]>
+	</select>
+	<select id="catelist3" resultType="org.joonzis.domain.ProductVO">
+		<![CDATA[select * from pro_board
+		where p_cate =3
+		]]>
+	</select>
+	<select id="catelist4" resultType="org.joonzis.domain.ProductVO">
+		<![CDATA[select * from pro_board
+		where p_cate =4
+		]]>
+	</select>
+	<select id="catelist5" resultType="org.joonzis.domain.ProductVO">
+		<![CDATA[select * from pro_board
+		where p_cate =5
+		]]>
+	</select>
+	<select id="catelist6" resultType="org.joonzis.domain.ProductVO">
+		<![CDATA[select * from pro_board
+		where p_cate =6
+		]]>
+	</select>
+	<select id="catelist7" resultType="org.joonzis.domain.ProductVO">
+		<![CDATA[select * from pro_board
+		where p_cate =7
+		]]>
+	</select>
+	<select id="catelist8" resultType="org.joonzis.domain.ProductVO">
+		<![CDATA[select * from pro_board
+		where p_cate =8
+		]]>
+	</select>
+	
+	<insert id="insertProduct">
+		insert into pro_board
+			(p_num, p_id, p_cate, p_title, p_content, p_imgf, p_imgl, p_price,  p_date, p_star, p_price2, p_price3)
+		values
+			(pro_seq.nextval,#{p_id}, #{p_cate},#{p_title}, #{p_content}, #{p_imgf}, #{p_imgl},#{p_price},sysdate, #{p_star},#{p_price2},#{p_price3})
+	</insert>
+	
+	<select id="getProduct" resultType="org.joonzis.domain.ProductVO">
+		select * from pro_board where p_num=#{p_num}
+	</select>
+	
+	<select id="getPlist" resultType="org.joonzis.domain.ProductVO">
+		select * from pro_board where p_id=#{p_id}
+	</select>
+	
+	<delete id="removeProduct">
+		delete from pro_board 
+		where p_num=#{p_num}
+	</delete>
+	
+	<update id="updateProduct">
+		update pro_board set
+			p_id=#{p_id},
+			p_cate=#{p_cate},
+			p_title=#{p_title},
+			p_content=#{p_content},
+			p_imgf=#{p_imgf},
+			p_imgl=#{p_imgl},
+			p_star=#{p_star},
+			p_price=#{p_price},
+			p_price2=#{p_price2},
+			p_price3=#{p_price3}
+		where p_num=#{p_num}
+	</update>
+	
+	<select id="readKeword" resultType="org.joonzis.domain.ProductVO">
+	select * from pro_board
+	where p_title like '%'|| #{keyword}|| '%'
+	</select>
+	
+	<select id="realist" resultType="org.joonzis.domain.ProductVO">
+		<![CDATA[
+		select * from pro_board
+		where p_cate=1 and rownum < 6
+		ORDER BY p_num DESC
+		]]>
+	</select>
+	<select id="piclist" resultType="org.joonzis.domain.ProductVO">
+		<![CDATA[
+		select * from pro_board
+		where p_cate=4 and rownum < 6
+		ORDER BY p_num DESC
+		]]>
+	</select>
+	<select id="itlist" resultType="org.joonzis.domain.ProductVO">
+		<![CDATA[
+		select * from pro_board
+		where p_cate=5 and rownum < 6
+		ORDER BY p_num DESC
+		]]>	
+	</select>
+</mapper>

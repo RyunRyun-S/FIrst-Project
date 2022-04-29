@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.joonzis.mapper.MemberMapper">
+	
+	<resultMap type="org.joonzis.domain.MemberVO" id="memberMap">
+		<result property="userid" column="userid"/>
+		<result property="userpw" column="userpw"/>
+		<result property="userName" column="userName"/>
+		<result property="useremail" column="useremail"/>
+		<result property="userbirth" column="userbirth"/>
+		<result property="regDate" column="regDate"/>
+		<result property="updateDate" column="updateDate"/>
+		<collection property="authList" resultMap="authMap"/>
+	</resultMap>
+	
+	<resultMap type="org.joonzis.domain.AuthVO" id="authMap">
+		<result property="userid" column="userid"/>
+		<result property="auth" column="auth"/>
+	</resultMap>
+
+
+	<select id="read" resultMap="memberMap">
+		SELECT
+		    mem.userid, userpw, username, enabled, regdate, updatedate,userbirth, useremail, auth
+		FROM
+		    tbl_member mem LEFT JOIN tbl_member_auth auth
+		    on mem.userid=auth.userid
+		WHERE
+		    mem.userid=#{userid}
+	</select>
+	
+	
+	<insert id="insertAuth">
+		insert into tbl_member_auth(userid, auth)
+		values
+		(#{userid},#{auth})
+	</insert>
+	
+	<insert id="userjoin">
+		insert into tbl_member(userid, userpw, userName, useremail, userbirth)
+		values
+		(#{userid},#{userpw},#{userName},#{useremail},#{userbirth})
+		
+	</insert>
+	
+	
+	
+	
+	
+	
+	<select id="MemberList" resultType="org.joonzis.domain.MemberVO">
+		select * from tbl_member 
+		order by USERID desc
+	</select>
+	
+	<delete id="removeAuth" parameterType="String">
+		delete from tbl_member_auth 
+		where userid=#{userid}
+		
+	</delete>
+
+
+	<delete id="removeMember" parameterType="String" >
+
+		delete from tbl_member 
+		where userid=#{userid}
+
+	</delete>
+	
+
+	
+
+	<update id="memberUpdate">
+		UPDATE tbl_member SET 
+		userpw = #{userpw},
+		userName = #{userName}
+		useremail = #{useremail}
+		WHERE userid = #{userid}
+	</update>
+	
+	<update id="authUpdate" parameterType="String">
+		UPDATE tbl_member_auth SET 
+		auth = #{auth}
+		WHERE userid = #{userid}
+	</update>
+	
+	
+</mapper>

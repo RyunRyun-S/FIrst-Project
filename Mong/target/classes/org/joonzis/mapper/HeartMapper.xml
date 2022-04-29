@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="org.joonzis.mapper.HeartMapper"> 
+	<select id="getHeartList" resultType="org.joonzis.domain.HeartVO">
+		select * from h_board 
+		order by h_num desc
+	</select>
+	
+	<insert id="insertHeart">
+		insert into h_board
+			(h_num,h_img, h_title, h_date, h_id)
+		values
+			(h_seq.nextval, #{h_img}, #{h_title},sysdate, #{h_id})
+	</insert>
+	
+	<select id="getHeart" resultType="org.joonzis.domain.HeartVO">
+		select * from h_board where h_id=#{h_id}
+	</select>
+	
+	<delete id="deleteHeart">
+		delete from h_board 
+		where h_num=#{h_num}
+	</delete>
+	
+	<update id="updateHeart">
+		update h_board set
+			h_img=#{h_img},
+			h_title=#{h_title},
+			h_date=sysdate
+		where h_num=#{h_num}
+	</update>
+</mapper>
